@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+    <style>
+        .imgHldrs{
+            position: absolute;
+            margin: 0 auto;
+        }
+        .clearfix:after {
+            content: ".";
+            display: block;
+            clear: both;
+            visibility: hidden;
+            line-height: 0;
+            height: 0;
+        }
+        .clearfix {
+            display: inline-block;
+        }
+    </style>
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script>
+        // Please note this will be turned into a plugin & the hard coded values could
+        // be passed in as arguments.
+        $(document).ready(function(){
+            divClsng = "</div>";
+            imageSlides = '';
+            imageWidth = 150;
+
+            // offset vars
+            topLeftGlobalOffset = 0;
+            currentTopImageLoc = 0;
+
+            images = Array();
+            imgSrc = ' <img src="images/';
+            imgSrcClsng = '" />';
+            for(i = 1; i <= 20; i++) {
+                images.push('R.png');
+            }
+            divOpng = "<div class='imgHldrs' ";
+
+            for (counter = 1; counter <= 3; counter++) {
+                $style = '';
+
+                if (counter % 2 != 0) {
+                    style = " style='left: " +topLeftGlobalOffset + "px; top: 0px;z-index: "+ ( counter-1) +"' > " ;
+                    topLeftGlobalOffset +=  imageWidth + 20;
+                    currentTopImageLoc =  topLeftGlobalOffset - 20;
+                    imageSlides +=  divOpng +  style +  imgSrc +  images[ counter] +  imgSrcClsng +  divClsng;
+                } else {
+                    style = " style='left: " + ( currentTopImageLoc-(( imageWidth)/2)) + "px; top: 100px;z-index: "+ ( counter+1) +"' > " ;
+                    imageSlides +=  divOpng +  style +  imgSrc +  images[ counter] +  imgSrcClsng +  divClsng;
+                }
+            }
+            $("#imageArea").html(imageSlides + '<div class="clearfix"></div>');
+        });
+    </script>
+</head>
+<body>
+    <div id="imageArea"></div>
+</body>
+</html>
